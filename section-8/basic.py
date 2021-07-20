@@ -2,12 +2,16 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-  name = 'Gabriel'
-  letters = [*name]
-  pup_dictionary = {'pup_name': 'Sammy'}
-  return render_template('basic.html', name=name, letters=letters, pup_dictionary=pup_dictionary)
 
-if __name__ == '__main__':
-  app.run(port=5050, debug=True)
+@app.route("/")
+def index():
+    return render_template("home.html")
+
+
+@app.route("/puppy/<name>")
+def pup_name(name):
+    return render_template("puppy.html", name=name)
+
+
+if __name__ == "__main__":
+    app.run(port=5050, debug=True)
