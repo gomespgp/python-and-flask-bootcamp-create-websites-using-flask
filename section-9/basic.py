@@ -1,30 +1,31 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, session, redirect, url_for
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import (
+    StringField,
+    SubmitField,
+)
 
 app = Flask(__name__)
 
-app.config["SECRET_KEY"] = "mysecretkey"
+app.config["SECRET_KEY"] = "mykey"
 
 
-class InfoForm(FlaskForm):
+class SimpleForm(FlaskForm):
 
-    breed = StringField("What Breed are you?")
-    submit = SubmitField("Submit")
+    submit = SubmitField("Click Me.")
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
 
-    breed = False
-
-    form = InfoForm()
+    form = SimpleForm()
 
     if form.validate_on_submit():
-        breed = form.breed.data
-        form.breed.data = ""
+        flash("You just clicked the button!")
 
-    return render_template("index.html", form=form, breed=breed)
+        return redirect(url_for("index"))
+
+    return render_template("index.html", form=form)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,6 @@
+<h1>Thank you. Here is the info you gave us:</h1>
+<ul>
+    {%for x, y in session.items()%}
+    <li>{{x|capitalize}}: {{y}}</li>
+    {%endfor%}
+</ul>
